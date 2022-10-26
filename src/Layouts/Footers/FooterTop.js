@@ -6,11 +6,37 @@ export class FooterTop extends Component {
    }
 
    getNav = (arr) => {
+      const setArr = new Set(arr)
       return (
          <ul className="footer-links list-unstyled">
             {
-               arr.map((element, index) => {
-                  console.log(element)
+               Array.from(setArr).map((element, index) => {
+                  return (
+                     <li key={index}>
+                        <a href="#">
+                           <i className="bi bi-chevron-right" />{element}
+                        </a>
+                     </li>
+                  )
+               })
+            }
+         </ul>
+      )
+   }
+
+   getCategories = (arr) => {
+      const setArr = new Set(arr)
+      return (
+         <ul className="footer-links list-unstyled">
+            {
+               Array.from(setArr).map((element, index) => {
+                  return (
+                     <li key={index}>
+                        <a href="#">
+                           <i className="bi bi-chevron-right" />{element}
+                        </a>
+                     </li>
+                  )
                })
             }
          </ul>
@@ -71,7 +97,8 @@ export class FooterTop extends Component {
                   </div>
                   <div className="col-6 col-lg-2">
                      <h3 className="footer-heading">Categories</h3>
-                     <ul className="footer-links list-unstyled">
+                     {this.getCategories(this.props.categories)}
+                     {/* <ul className="footer-links list-unstyled">
                         <li>
                            <a href="category.html">
                               <i className="bi bi-chevron-right" /> Business
@@ -112,7 +139,7 @@ export class FooterTop extends Component {
                               <i className="bi bi-chevron-right" /> Travel
                            </a>
                         </li>
-                     </ul>
+                     </ul> */}
                   </div>
                   <div className="col-lg-4">
                      <h3 className="footer-heading">Recent Posts</h3>
