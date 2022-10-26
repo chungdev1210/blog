@@ -1,0 +1,11 @@
+-  Components => Components dùng chung chi tất cả các page
+
+- Pages => chứa các module tương ứng theo router
+
+- Config => chứa các file config (JSON)
+
+- Routers => chứa các đăng kí Routers
+
+- Assets => chứa fonts, images, styles
+
+- Layouts => 
