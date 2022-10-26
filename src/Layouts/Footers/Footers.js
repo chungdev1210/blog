@@ -12,7 +12,8 @@ export class Footers extends Component {
       this.state = {
          introduce: '',
          navigations: '',
-         categories: ''
+         categories: '',
+         posts: ''
       }
    }
 
@@ -23,7 +24,8 @@ export class Footers extends Component {
          this.setState({
             introduce: data.introduce,
             navigations: data.navigations,
-            categories: data.categories
+            categories: data.categories,
+            posts: data.posts
          })
        }
    }
@@ -34,13 +36,13 @@ export class Footers extends Component {
 
    render() {
 
-      const { introduce, navigations, categories } = this.state;
+      const { introduce, navigations, categories, posts } = this.state;
 
       return (
          <>
             {/* ======= Footer ======= */}
             <footer id="footer" className="footer">
-               <FooterTop {...introduce} navigations={navigations} categories={categories} />
+               <FooterTop introduce={introduce} navigations={navigations} categories={categories} posts={posts}/>
                <div className="footer-legal">
                   <div className="container">
                      <div className="row justify-content-between">

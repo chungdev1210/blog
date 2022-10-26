@@ -162,30 +162,34 @@
 
       "categories": ["Business", "Culture", "Sport", "Food", "Politics", "Celebrity", "Startup", "Travel"],
 
-      "Recenter Posts": [
+      "posts": [
         {
           "id": 1,
           "images": "",
           "categories": "culture",
-          "title": "5 Great Startup Tips for Female Founders"
+          "title": "5 Great Startup Tips for Female Founders 1",
+          "post_at": "Jul 5th '22"
         },
         {
           "id": 2,
           "images": "",
           "categories": "culture",
-          "title": "5 Great Startup Tips for Female Founders"
+          "title": "5 Great Startup Tips for Female Founders 2",
+          "post_at": "Jul 5th '22"
         },
         {
           "id": 3,
           "images": "",
           "categories": "culture",
-          "title": "5 Great Startup Tips for Female Founders"
+          "title": "5 Great Startup Tips for Female Founders 3",
+          "post_at": "Jul 5th '22"
         },
         {
           "id": 4,
           "images": "",
           "categories": "culture",
-          "title": "5 Great Startup Tips for Female Founders"
+          "title": "5 Great Startup Tips for Female Founders 4",
+          "post_at": "Jul 5th '22"
         }
       ]
     }
