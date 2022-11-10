@@ -7,54 +7,71 @@ import HttpClient from "../../Services/Helpers/Api/HttpClient";
 const client = new HttpClient();
 
 export class Footers extends Component {
-   constructor(props) {
-      super(props)
-      this.state = {
-         introduce: '',
-         navigations: '',
-         categories: '',
-         posts: ''
-      }
-   }
+  constructor(props){
+    super(props);
+    this.state = {
+      about: {},
+      menus: {},
+      categories: {},
+      posts: {},
+      recentPosts: []
+    }
+  }
 
-   getOptions = async () => {
-      const res = await client.get(client.options);
-      if (res.response.ok) {
-         const data = res.data.footer;
-         this.setState({
-            introduce: data.introduce,
-            navigations: data.navigations,
-            categories: data.categories,
-            posts: data.posts
-         })
-       }
-   }
+  getRecentPosts = async (limit) => {
+    const res = await client.get(client.posts, {_limit: limit, _expand: 'category'});
+    if (res.response.ok) {
+      const data = res.data;
+      
+      this.setState({
+        recentPosts: data
+      })
+    }
+  }
 
-   componentDidMount = () => {
-      this.getOptions()
-   }
+  getOptions = async () => {
+    const res = await client.get(client.options);
 
-   render() {
+    if (res.response.ok) {
+      const data = res.data;
 
-      const { introduce, navigations, categories, posts } = this.state;
+    
+      this.setState({
+        about: data.footer.about,
+        menus: data.footer.menus,
+        categories: data.footer.categories,
+        posts: data.footer.posts
+      })
 
-      return (
-         <>
-            {/* ======= Footer ======= */}
-            <footer id="footer" className="footer">
-               <FooterTop introduce={introduce} navigations={navigations} categories={categories} posts={posts}/>
-               <div className="footer-legal">
-                  <div className="container">
-                     <div className="row justify-content-between">
-                        <Copyright />
-                        <Social />
-                     </div>
-                  </div>
-               </div>
-            </footer>
-         </>
-      );
-   }
+      this.getRecentPosts(data.footer.posts.limit);
+     
+    }
+  };
+
+  componentDidMount = () => {
+    this.getOptions();
+  
+  }
+
+  render() {
+  
+    return (
+      <>
+        {/* ======= Footer ======= */}
+        <footer id="footer" className="footer">
+          <FooterTop {...this.state}/>
+          <div className="footer-legal">
+            <div className="container">
+              <div className="row justify-content-between">
+                <Copyright />
+                <Social />
+              </div>
+            </div>
+          </div>
+        </footer>
+      </>
+    );
+  }
 }
 
 export default Footers;

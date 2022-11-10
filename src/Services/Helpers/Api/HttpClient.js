@@ -2,17 +2,17 @@ import config from '../../../Configs/Config.json';
 import endpoint from '../../../Configs/Endpoint.json';
 
 export default class HttpClient {
-  constructor(){
+  constructor() {
 
     const endpointArr = Object.keys(endpoint);
-    if (endpointArr.length){
-        endpointArr.forEach((item) => {
-            this[item.toLowerCase()] = endpoint[item];
-        })
+    if (endpointArr.length) {
+      endpointArr.forEach((item) => {
+        this[item.toLowerCase()] = endpoint[item];
+      })
     }
-  }  
+  }
 
-  callApi = async (url, method, params={}, body = null) => {
+  callApi = async (url, method, params = {}, body = null) => {
 
     const options = {
       method: method,
@@ -27,9 +27,14 @@ export default class HttpClient {
 
     url = `${config.SERVER_API}${url}`;
 
-    if (Object.keys(params).length){
-        const searchParams = new URLSearchParams(params).toString();
-        url+=`?${searchParams}`;
+    if (Object.keys(params).length) {
+      const searchParams = new URLSearchParams(params).toString();
+      if (url.indexOf('?') !== -1){
+        url += `&${searchParams}`;
+      } else {
+        url += `?${searchParams}`;
+      }
+      
     }
 
     const response = await fetch(url, options);
@@ -41,23 +46,23 @@ export default class HttpClient {
     };
   };
 
-  get = (url, params={}) => {
+  get = (url, params = {}) => {
     return this.callApi(url, "GET", params);
   };
 
-  post = (url, body, params={}) => {
-    return this.callApi(url, "POST", body, params);
+  post = (url, body, params = {}) => {
+    return this.callApi(url, "POST", params, body);
   };
 
-  put = (url, body, params={}) => {
-    return this.callApi(url, "PUT", body, params);
+  put = (url, body, params = {}) => {
+    return this.callApi(url, "PUT", params, body);
   };
 
-  patch = (url, body, params={}) => {
-    return this.callApi(url, "PATCH", body, params);
+  patch = (url, body, params = {}) => {
+    return this.callApi(url, "PATCH", params, body);
   };
 
-  delete = (url, params={}) => {
+  delete = (url, params = {}) => {
     return this.callApi(url, "DELETE", params);
   };
 }

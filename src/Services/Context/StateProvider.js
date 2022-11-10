@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import HttpClient from "../Helpers/Api/HttpClient";
+
+const client = new HttpClient();
 
 export const StateContext = React.createContext();
 
@@ -6,17 +9,81 @@ export class StateProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        msg: "Tech2"
+      postsList: [],
+      keyword: '',
+      comments: [],
+      typeComment: 'comment'
     }
 
     //Đăng ký các action
     this.action = {
-        getPosts: this.getPosts
+        getPosts: this.getPosts,
+        setKeyword: this.setKeyword,
+        getComments: this.getComments,
+        postComment: this.postComment,
+        setTypeComment: this.setTypeComment  
     }
   }
 
-  getPosts = (categoryId) => {
-    console.log(categoryId);
+  setKeyword = (keyword) => {
+    this.setState({
+      keyword: keyword
+    })
+  }
+
+  getPosts = async (filters = {}, limit, page=1) => {
+    filters._limit = limit;
+    filters._page = page;
+    filters._expand = 'category';
+    filters._expand = 'user';
+ 
+    const res = await client.get(client.posts + '?_expand=category&_expand=user', filters);
+      if (res.response.ok){
+        const postsList = res.data;
+      
+        this.setState({
+          postsList: postsList
+        })
+      }
+   
+  }
+
+  getComments = async (postId) => {
+    const res = await client.get(client.comments, {
+      postId: postId,
+      _sort: 'id',
+      _order: 'desc'
+    });
+    if (res.response.ok){
+     
+      this.setState({
+        comments: res.data
+      })
+    }
+  }
+
+  setTypeComment = (type) => {
+    this.setState({typeComment: type})
+  }
+
+  postComment = async (comment, postId, type = 'comment') => {
+    const res = await client.post(client.comments, comment);
+    if (res.response.ok){
+      this.getComments(postId)
+
+      if(type === 'reply') {
+        this.setState({
+          typeComment: 'reply'
+        })
+      }
+    }
+  }
+
+  postReply = async (comment,  postId) => {
+    const res = await client.post(client.comments, comment);
+    if (res.response.ok){
+      this.getComments(postId);
+    }
   }
 
   render() {

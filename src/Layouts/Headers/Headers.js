@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navigation from "./Navigation";
 import Social from "./Social";
 import HttpClient from "../../Services/Helpers/Api/HttpClient";
+import { Link } from "react-router-dom";
 
 const client = new HttpClient();
 
@@ -41,9 +42,9 @@ export class Headers extends Component {
           className="header d-flex align-items-center fixed-top"
         >
           <div className="container-fluid container-xl d-flex align-items-center justify-content-between">
-            <a href="/" className="logo d-flex align-items-center">
+            <Link to="/" className="logo d-flex align-items-center">
               <h1>{logo}</h1>
-            </a>
+            </Link>
             <Navigation menus={menus}/>
             <Social {...social}/>
           </div>
